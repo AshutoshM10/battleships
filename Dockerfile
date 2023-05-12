@@ -33,11 +33,5 @@ EXPOSE 3000
 # start the project with pm2 
 CMD npm start 
 
-<<<<<<< HEAD
-# now the application will run on port 3000
-
-
-=======
->>>>>>> bfc7560d23efaeb92f87323507e936033753f3a9
 
 
