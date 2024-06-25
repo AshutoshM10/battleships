@@ -20,18 +20,10 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       
-      - name: Extract metadata (tags) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/battleship
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and tag Docker image
+        run: |
+          docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/battleship:${{ github.sha }}
+      
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/battleship:${{ github.sha }}
